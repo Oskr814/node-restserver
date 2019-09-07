@@ -17,7 +17,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // archivo donde se manejan los diferentes tipos de peticiones HTTP
-app.use(require('./routes/usuario'));
+//Configuracion global de rutas
+app.use(require('./routes/index'));
 
 //Conexion local base datos mongoDB
 mongoose.connect(process.env.URLDB, (err, resp) => {

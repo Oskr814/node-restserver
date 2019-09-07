@@ -2,6 +2,7 @@ const express = require('express');
 
 // Archivo donde se especifica la estructura del Schema Usuario (nombre, email, etc)
 const Usuario = require('../models/usuario');
+const { verificarToken, verificaAdmin_Role } = require('../middlewares/autenticacion');
 const app = express();
 
 // libreria para encriptar cadenas de caracteres
@@ -12,7 +13,7 @@ const _ = require('underscore');
 
 
 // PETICION GET: Obtener documentos de una coleccion de la base de datos.
-app.get('/usuario', (req, res) => {
+app.get('/usuario', verificarToken, (req, res) => {
 
     let desde = req.query.desde || 0;
     desde = Number(desde);
@@ -45,7 +46,7 @@ app.get('/usuario', (req, res) => {
 
 // PETICION POST: Agregar documentos a una coleccion de la base de datos.
 
-app.post('/usuario', (req, res) => {
+app.post('/usuario', [verificarToken, verificaAdmin_Role], (req, res) => {
 
     let body = req.body;
 
@@ -76,7 +77,7 @@ app.post('/usuario', (req, res) => {
 
 // PETICION PUT: Actualizar un documento de la base datos
 
-app.put('/usuario/:id', (req, res) => {
+app.put('/usuario/:id', [verificarToken, verificaAdmin_Role], (req, res) => {
 
     let id = req.params.id;
 
@@ -102,7 +103,7 @@ app.put('/usuario/:id', (req, res) => {
 
 //PETICION DELETE: Borrar(Cambiar de estado) un documento de la base de datos.
 
-app.delete('/usuario/:id', (req, res) => {
+app.delete('/usuario/:id', [verificarToken, verificaAdmin_Role], (req, res) => {
 
     let id = req.params.id;
 

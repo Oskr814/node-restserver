@@ -4,6 +4,7 @@ require('./config/config');
 const express = require('express');
 // libreia para manejar mongoDB con node
 const mongoose = require('mongoose');
+const path = require('path');
 
 const app = express();
 
@@ -15,6 +16,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
+
+// Habilitar carpeta public
+app.use(express.static(path.resolve(__dirname, '../public')));
 
 // archivo donde se manejan los diferentes tipos de peticiones HTTP
 //Configuracion global de rutas
